@@ -1,27 +1,45 @@
-
 const renderCards = (err, data) => {
   if (err) {
     console.warn(err, data);
     return;
   }
 
-  // const template = document.createDocumentFragment();
+  const template = document.createDocumentFragment();
   const headlines = data.articles.map(item => {
     const card = document.createElement('div');
-    card.className = 'card';
+
     if (item.author === null) item.author = 'Автор не указан';
-    card.innerHTML = `
-      <a href="${item.url}" class="card__title"
-        target="_blank">${item.title}</a>
-      <p class="card__text">${item.description}</p>
-      <img class="card__image" src="${item.urlToImage}">
-      <p class="card__date">${item.publishedAt}</p>
-      <p class="card__author">${item.author}</p>
-    `;
+
+    const title = document.createElement('a');
+    title.className = 'card__title';
+    title.href = item.url;
+    title.target = '_blank';
+    title.textContent = item.title;
+    const text = document.createElement('p');
+    text.className = 'card__text';
+    text.textContent = item.description;
+    const image = new Image();
+    image.className = 'card__image';
+    image.src = item.urlToImage;
+    card.className = 'card';
+    const cardDate = document.createElement('p');
+    cardDate.className = 'card__date';
+    cardDate.textContent = item.publishedAt;
+    const cardAuthor = document.createElement('p');
+    cardAuthor.className = 'card__author';
+    cardAuthor.textContent = item.author;
+
+
+    card.append(title, text, image, cardDate, cardAuthor);
+
     return card;
   });
+
+
   headlines.splice(4);
-  return headlines;
+  template.append(...headlines);
+
+  return template;
 };
 
 export default renderCards;

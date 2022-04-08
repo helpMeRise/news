@@ -24,16 +24,19 @@ const init = () => {
 
 init().then(data => {
   preload.remove();
-  wrapperHeadlines.append(data[0][0]);
-  wrapperHeadlines.append(data[0][1]);
-  wrapperHeadlines.append(data[0][2]);
-  wrapperHeadlines.append(data[0][3]);
+  wrapperHeadlines.append(data[0]);
 });
 
 const show = () => {
   preload.show();
   return Promise.all([
     fetchRequest(searchUrl, {
+      callback: renderCards,
+      headers: {
+        'X-Api-Key': '03224a3a80d742aebfbfa7b4012d353a',
+      },
+    }),
+    fetchRequest('top-headlines?country=ru', {
       callback: renderCards,
       headers: {
         'X-Api-Key': '03224a3a80d742aebfbfa7b4012d353a',
@@ -51,9 +54,7 @@ form.addEventListener('submit', e => {
     preload.remove();
     headlinesCards.forEach(item => item.remove());
     newsCards.forEach(item => item.remove());
-    wrapperNews.append(data[0][0]);
-    wrapperNews.append(data[0][1]);
-    wrapperNews.append(data[0][2]);
-    wrapperNews.append(data[0][3]);
+    wrapperNews.append(data[0]);
+    wrapperHeadlines.append(data[0]);
   });
 });
