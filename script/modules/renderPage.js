@@ -55,6 +55,6 @@ form.addEventListener('submit', e => {
     headlinesCards.forEach(item => item.remove());
     newsCards.forEach(item => item.remove());
     wrapperNews.append(data[0]);
-    wrapperHeadlines.append(data[0]);
+    wrapperHeadlines.append(data[1]);
   });
 });
